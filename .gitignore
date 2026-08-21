@@ -4,3 +4,12 @@
 
 # Editor / tooling
 .claude/
+
+# Secrets. This is a public repo and a statically served site: anything
+# committed here is readable by anyone, and anything deployed is fetchable
+# at /<filename>. Real secrets belong in Vercel's Environment Variables.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
