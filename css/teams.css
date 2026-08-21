@@ -119,29 +119,32 @@
 .tstat__v{font-size:1.375rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .tstat__k{margin-top:5px;font-size:.5625rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
 
-/* The car sits against the bottom edge and spills slightly past the
-   card, the way Formula1.com crops the car photo on its team cards. */
+/* The car sits against the bottom edge, whole. Formula1.com bleeds its car
+   photo past the card edge, but these liveries are the point of the page, so
+   nose and tail both stay inside the frame. */
 .tteam__car{
   position:relative;z-index:1;margin-top:auto;
-  padding:10px 0 0;pointer-events:none
+  padding:10px clamp(16px,2.6vw,30px) 6px;pointer-events:none
 }
 /* The car shadow is painted as a blurred ellipse behind the image, NOT
    with filter:drop-shadow() on the <img>. On a raster this large,
    drop-shadow forces a render path that makes the image vanish outright
    on some engines. This ellipse is plain paint, so it always shows. */
 .tteam__car::after{
-  content:"";position:absolute;left:8%;right:8%;bottom:4px;height:16px;
-  border-radius:50%;background:rgba(0,0,0,.55);filter:blur(9px);
+  content:"";position:absolute;left:18%;right:18%;bottom:8px;height:13px;
+  border-radius:50%;background:rgba(0,0,0,.5);filter:blur(9px);
   z-index:-1
 }
 /* height:auto is required. The height attribute is in the markup so the
    browser can reserve space before the image lands, but without this the
    attribute is also used as the final height and the car goes squat. */
 .tteam__car img{
-  width:112%;height:auto;max-width:none;margin-left:-4%;
+  width:100%;height:auto;
   transition:transform .5s var(--ease)
 }
-.tteam:hover .tteam__car img,.tteam:focus-within .tteam__car img{transform:translateX(2.5%) scale(1.035)}
+/* The card clips its overflow, so the hover move is vertical only. Scaling or
+   sliding sideways here would cut the bumpers off again. */
+.tteam:hover .tteam__car img,.tteam:focus-within .tteam__car img{transform:translateY(-4px)}
 /* teams with no livery artwork: the silhouette is dimmed, not shadowed */
 .tteam--nolivery .tteam__car img{opacity:.5}
 

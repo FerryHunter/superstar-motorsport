@@ -3,8 +3,8 @@
    Data: window.PSCI_TEAMS (js/teams-data.js)
 
    The layout follows how formula1.com/en/teams presents teams: one
-   grid of cards, each card wearing its own team colour, the car
-   cropped at the card edge. The visual language stays Porsche though:
+   grid of cards, each card wearing its own team colour, the car along
+   the bottom edge. The visual language stays Porsche though:
    off-black, 1px rules, uppercase letterspaced labels, one easing.
 
    Team colours never become CSS classes. Each card writes --c / --c2
