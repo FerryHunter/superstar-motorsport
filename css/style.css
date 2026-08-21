@@ -1,35 +1,44 @@
 /* =========================================================
    Font faces
-   The installed Porsche Next family ships only Thin / Regular / Bold.
-   Asking for weight 600 (which does not exist) let each engine decide for
-   itself. Chrome synthesised an intermediate, Safari jumped to real Bold, so
-   the page rendered differently in each. Mapping the real faces explicitly,
-   and only ever asking for 400/700, makes both engines resolve identically.
-   Single weight values (not ranges) keep older Safari happy too.
+   Porsche Next is self-hosted from /fonts so the page renders the same on
+   every device. local() stays first in each src list: visitors who already
+   have the family installed use it and skip the download entirely.
+
+   The family ships only Thin / Regular / Bold. Asking for weight 600 (which
+   does not exist) let each engine decide for itself. Chrome synthesised an
+   intermediate, Safari jumped to real Bold, so the page rendered differently
+   in each. Mapping the real faces explicitly, and only ever asking for
+   400/700, makes both engines resolve identically. Single weight values
+   (not ranges) keep older Safari happy too.
    ========================================================= */
 @font-face{
   font-family:"SSM Sans";
-  src:local("PorscheNext-Regular"),local("Porsche Next");
+  src:local("PorscheNext-Regular"),local("Porsche Next"),
+      url("../fonts/PorscheNext-Regular.otf") format("opentype");
   font-weight:400;font-style:normal;font-display:swap
 }
 @font-face{
   font-family:"SSM Sans";
-  src:local("PorscheNext-Bold"),local("Porsche Next Bold");
+  src:local("PorscheNext-Bold"),local("Porsche Next Bold"),
+      url("../fonts/PorscheNext-Bold.otf") format("opentype");
   font-weight:700;font-style:normal;font-display:swap
 }
 @font-face{
   font-family:"SSM Sans";
-  src:local("PorscheNext-Thin"),local("Porsche Next Thin");
+  src:local("PorscheNext-Thin"),local("Porsche Next Thin"),
+      url("../fonts/PorscheNext-Thin.otf") format("opentype");
   font-weight:100;font-style:normal;font-display:swap
 }
 @font-face{
   font-family:"SSM Sans";
-  src:local("PorscheNext-Italic"),local("Porsche Next Italic");
+  src:local("PorscheNext-Italic"),local("Porsche Next Italic"),
+      url("../fonts/PorscheNext-Italic.otf") format("opentype");
   font-weight:400;font-style:italic;font-display:swap
 }
 @font-face{
   font-family:"SSM Sans";
-  src:local("PorscheNext-BoldItalic"),local("Porsche Next Bold Italic");
+  src:local("PorscheNext-BoldItalic"),local("Porsche Next Bold Italic"),
+      url("../fonts/PorscheNext-BoldItalic.otf") format("opentype");
   font-weight:700;font-style:italic;font-display:swap
 }
 
