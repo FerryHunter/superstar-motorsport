@@ -1,0 +1,15 @@
+# Kept in git for backup and history, but never part of a deployment.
+# Nothing in the site references these; the liveries the pages actually use
+# are the optimised img/teams/*.webp files.
+PSCI Cars/
+
+# Reference copy of porsche.com, used while designing. Not linked from anywhere.
+archive/
+
+# Unreferenced leftovers from earlier hero crops (the pages use img/hero-*.webp).
+hero-wide.jpg
+hero.avif
+
+.DS_Store
+**/.DS_Store
+.claude/

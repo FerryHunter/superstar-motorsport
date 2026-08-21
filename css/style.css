@@ -4,12 +4,18 @@
    every device. local() stays first in each src list: visitors who already
    have the family installed use it and skip the download entirely.
 
-   The family ships only Thin / Regular / Bold. Asking for weight 600 (which
-   does not exist) let each engine decide for itself. Chrome synthesised an
-   intermediate, Safari jumped to real Bold, so the page rendered differently
-   in each. Mapping the real faces explicitly, and only ever asking for
-   400/700, makes both engines resolve identically. Single weight values
-   (not ranges) keep older Safari happy too.
+   Only 400 and 700 upright ship. The family also has Thin, Italic and
+   BoldItalic, but nothing on the site renders them: no rule sets weight 100,
+   no rule sets font-style:italic, and the two <i> elements in the markup are
+   a decorative bar (.cap__bar i, no text) and a ticker unit that is explicitly
+   font-style:normal. Shipping them cost 471 KB for glyphs no one ever sees.
+   Should italic text ever appear, the engine synthesises an oblique from 400.
+
+   Asking for weight 600 (which does not exist) let each engine decide for
+   itself. Chrome synthesised an intermediate, Safari jumped to real Bold, so
+   the page rendered differently in each. Mapping the real faces explicitly,
+   and only ever asking for 400/700, makes both engines resolve identically.
+   Single weight values (not ranges) keep older Safari happy too.
    ========================================================= */
 @font-face{
   font-family:"SSM Sans";
@@ -23,25 +29,6 @@
       url("../fonts/PorscheNext-Bold.otf") format("opentype");
   font-weight:700;font-style:normal;font-display:swap
 }
-@font-face{
-  font-family:"SSM Sans";
-  src:local("PorscheNext-Thin"),local("Porsche Next Thin"),
-      url("../fonts/PorscheNext-Thin.otf") format("opentype");
-  font-weight:100;font-style:normal;font-display:swap
-}
-@font-face{
-  font-family:"SSM Sans";
-  src:local("PorscheNext-Italic"),local("Porsche Next Italic"),
-      url("../fonts/PorscheNext-Italic.otf") format("opentype");
-  font-weight:400;font-style:italic;font-display:swap
-}
-@font-face{
-  font-family:"SSM Sans";
-  src:local("PorscheNext-BoldItalic"),local("Porsche Next Bold Italic"),
-      url("../fonts/PorscheNext-BoldItalic.otf") format("opentype");
-  font-weight:700;font-style:italic;font-display:swap
-}
-
 /* =========================================================
    Superstars Motorsport
    1. tokens / reset      6. series showcase
