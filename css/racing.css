@@ -1,0 +1,488 @@
+/* =========================================================
+   Racing hub: calendar, standings, results
+   Loaded after css/style.css. Tokens, header, drawer, footer, and the
+   utilities are all reused from there.
+
+   1. page tokens        5. data tables
+   2. page head          6. standings panels
+   3. tab rail           7. results + qualifying panels
+   4. calendar panel     8. reduced motion  9. responsive
+   ========================================================= */
+
+/* ---------- 1. page tokens ---------- */
+:root{
+  /* Domain tokens for the racing classes. Deliberately kept apart from the
+     semantic tokens (error/success) so either set can change without
+     disturbing the other, following the liveTimingClass* pattern on
+     racing.porsche.com. */
+  --cls-pro:198 202 208;
+  --cls-proam:58 107 155;
+  --cls-gt4:0 150 57;
+  --cls-out:107 109 112;
+
+  /* event status: base + soft pairs, like the Porsche notification tokens */
+  --state-done:255 255 255;
+  --state-doneSoft:255 255 255;
+  --state-results:0 150 57;
+  --state-provisional:243 190 0;
+  --state-tba:107 109 112;
+
+  --row:rgba(255,255,255,.09);      /* rule between table rows */
+  --row-hover:rgba(255,255,255,.045);
+  --card:#101114;
+  --fs-page:clamp(2rem,1rem + 4.4vw,4.5rem);
+}
+
+/* this page scrolls normally: no section is pinned */
+.rpage{padding-top:var(--nav-h)}
+
+/* ---------- 2. page head ---------- */
+.rhead{
+  padding:clamp(28px,5vw,72px) var(--pad) clamp(20px,3vw,36px);
+  max-width:var(--wrap);margin-inline:auto
+}
+.rhead__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:clamp(16px,3vw,40px)}
+.rhead__title{
+  font-size:var(--fs-page);font-weight:700;line-height:.98;letter-spacing:-.02em;
+  text-wrap:balance
+}
+.rhead__title span{display:block;color:rgba(255,255,255,.42)}
+.rhead__lede{max-width:46ch;margin-top:18px;color:rgba(255,255,255,.62);font-size:.9375rem}
+.rhead__lede a{color:#fff;border-bottom:1px solid rgba(255,255,255,.3);transition:color var(--t1),border-color var(--t1)}
+.rhead__lede a:hover{color:rgb(var(--accent));border-color:rgb(var(--accent))}
+
+/* season picker: one control for the calendar, results, and qualifying */
+.seasons{display:flex;align-items:center;gap:6px;padding:6px;border:1px solid var(--line);border-radius:calc(var(--r) + 4px)}
+.seasons__label{
+  font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);padding:0 10px 0 6px
+}
+.season{
+  height:38px;padding:0 16px;border-radius:var(--r);
+  font-size:.9375rem;font-weight:700;color:rgba(255,255,255,.65);
+  font-variant-numeric:tabular-nums;
+  transition:background-color .25s var(--ease),color .25s var(--ease)
+}
+.season:hover{color:#fff;background:rgba(255,255,255,.08)}
+.season[aria-pressed="true"]{background:rgb(var(--accent));color:#fff}
+
+/* series statistics strip */
+.rstats{
+  max-width:var(--wrap);margin-inline:auto;padding:0 var(--pad);
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+  border-top:1px solid var(--line)
+}
+.rstat{padding:20px 0;border-right:1px solid var(--line)}
+.rstat:first-child{padding-left:0}
+.rstat:last-child{border-right:0}
+.rstat__v{font-size:clamp(1.5rem,1rem + 1.4vw,2.25rem);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.rstat__k{margin-top:8px;font-size:.625rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.rstat + .rstat{padding-left:clamp(12px,2vw,28px)}
+
+/* ---------- ticker acara ----------
+   Strip lengket di bawah navbar: bendera + tempat + putaran di kiri, satuan
+   hitung mundur di kanan, tanggal paling kanan — susunan strip acara F1,
+   dengan warna dan tipografi Porsche. */
+.ticker{
+  position:sticky;top:var(--nav-h);z-index:70;
+  border-bottom:1px solid var(--line);
+  background:rgba(8,9,11,.92);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)
+}
+.ticker__in{
+  max-width:var(--wrap);margin-inline:auto;padding:0 var(--pad);
+  min-height:46px;display:flex;align-items:center;gap:clamp(10px,2vw,26px)
+}
+.ticker__place{display:flex;align-items:center;gap:10px;min-width:0}
+.ticker__k{
+  font-size:.5625rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);white-space:nowrap
+}
+.ticker__place .flag{width:18px;height:13px}
+.ticker__p{font-size:.9375rem;font-weight:700;white-space:nowrap}
+.ticker__sep{color:rgba(255,255,255,.3)}
+.ticker__ev{
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.ticker__clock{display:flex;align-items:baseline;gap:10px;margin-left:auto}
+.ticker__u{display:inline-flex;align-items:baseline;gap:2px;font-variant-numeric:tabular-nums}
+.ticker__u b{font-size:1rem;font-weight:700;letter-spacing:.04em}
+.ticker__u i{
+  font-style:normal;font-size:.5625rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.45)
+}
+.ticker__flat{
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.55)
+}
+.ticker__meta{
+  display:flex;align-items:center;gap:10px;
+  font-size:.75rem;letter-spacing:.06em;color:rgba(255,255,255,.5);white-space:nowrap
+}
+.ticker__tba{letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+
+/* ---------- 3. tab rail ---------- */
+.rtabs{
+  position:sticky;top:calc(var(--nav-h) + var(--bar-h,0px));z-index:60;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(10,10,11,.82);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)
+}
+.rtabs__in{
+  max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad);
+  display:flex;gap:clamp(4px,1.4vw,22px);
+  overflow-x:auto;scrollbar-width:none
+}
+.rtabs__in::-webkit-scrollbar{display:none}
+.rtab{
+  position:relative;flex:none;height:54px;padding:0 4px;
+  font-size:.9375rem;color:rgba(255,255,255,.6);white-space:nowrap;
+  transition:color .25s var(--ease)
+}
+.rtab::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:rgb(var(--accent));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease)
+}
+.rtab:hover{color:#fff}
+.rtab[aria-selected="true"]{color:#fff;font-weight:700}
+.rtab[aria-selected="true"]::after{transform:scaleX(1)}
+
+/* ---------- panels ---------- */
+.rpanel{max-width:var(--wrap);margin-inline:auto;padding:clamp(28px,4.5vw,64px) var(--pad) clamp(56px,8vw,120px)}
+.rpanel[hidden]{display:none!important}
+.rpanel.is-swap{animation:panelIn .4s var(--ease) both}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.rsec{margin-bottom:clamp(28px,4vw,56px)}
+.rsec:last-child{margin-bottom:0}
+.rsec__head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:18px}
+.rsec__title{font-size:clamp(1.125rem,1rem + .5vw,1.5rem);font-weight:700;letter-spacing:-.01em}
+.rsec__note{font-size:.8125rem;color:rgba(255,255,255,.45)}
+.rlabel{font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+
+/* ---------- 4. calendar panel ---------- */
+.focus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:calc(var(--r) + 2px);overflow:hidden;margin-bottom:clamp(28px,4vw,52px)}
+.focus__cell{background:var(--ink);padding:clamp(16px,2vw,26px);display:grid;gap:8px;align-content:start}
+.focus__k{font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.focus__v{font-size:clamp(1.0625rem,1rem + .6vw,1.5rem);font-weight:700;line-height:1.15}
+.focus__m{font-size:.8125rem;color:rgba(255,255,255,.55)}
+.focus__cta{margin-top:4px}
+
+/* ---- round card ----
+   The layout follows the F1 schedule card: round label plus a date pill on the
+   top row, a large venue name with its flag, a small-caps event title, then a
+   three-box podium strip at the foot. Colour, rules, and type stay Porsche. */
+.rounds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,1.4vw,20px)}
+.round{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:calc(var(--r) + 4px);
+  background:var(--card);overflow:hidden;
+  transition:border-color .25s var(--ease),background-color .25s var(--ease)
+}
+.round:hover{border-color:rgba(255,255,255,.3);background:#14151a}
+
+.round__top{
+  display:flex;align-items:center;gap:10px;
+  padding:14px clamp(14px,1.4vw,20px)
+}
+.round__no{
+  font-size:.6875rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.72)
+}
+.round__top .badge{margin-right:auto}
+.round__date{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 10px;border-radius:var(--r);background:rgba(255,255,255,.07);
+  font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  font-variant-numeric:tabular-nums;white-space:nowrap
+}
+.round__date .ico{width:.95em;height:.95em;color:rgba(255,255,255,.55)}
+
+.round__body{padding:2px clamp(14px,1.4vw,20px) clamp(16px,1.8vw,22px)}
+.round__place{
+  display:flex;align-items:center;gap:14px;
+  font-size:clamp(1.75rem,1rem + 1.9vw,2.75rem);font-weight:700;line-height:1.05;
+  letter-spacing:-.02em
+}
+/* round flag, like the country icon on the F1 cards */
+.round__place .flag{
+  width:34px;height:34px;border-radius:50%;object-fit:cover;
+  box-shadow:0 0 0 1px rgba(255,255,255,.2)
+}
+.round__event{
+  margin-top:10px;
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.78);line-height:1.45
+}
+.round__where{margin-top:6px;font-size:.8125rem;color:rgba(255,255,255,.45);line-height:1.45}
+
+/* podium strip: three boxes in a row */
+.round__podium{
+  margin-top:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;padding:0 clamp(14px,1.4vw,20px) clamp(14px,1.4vw,20px)
+}
+.pod{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  padding:10px;border-radius:var(--r);background:rgba(255,255,255,.05)
+}
+.pod__p{
+  flex:none;font-size:1rem;font-weight:700;line-height:1;
+  font-variant-numeric:tabular-nums;color:rgba(255,255,255,.5)
+}
+.pod__p sup{font-size:.5em;letter-spacing:.04em;text-transform:uppercase}
+.pod:first-child .pod__p{color:rgb(var(--accent))}
+.pod__b{display:grid;gap:2px;min-width:0}
+.pod__n{
+  font-size:.8125rem;font-weight:700;line-height:1.2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
+.pod__v{
+  font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.45)
+}
+.round__none{
+  margin-top:auto;padding:14px clamp(14px,1.4vw,20px) clamp(16px,1.8vw,20px);
+  font-size:.8125rem;color:rgba(255,255,255,.38)
+}
+
+/* status badge */
+.badge{
+  display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:3px;
+  font-size:.625rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap
+}
+.badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.badge--done{color:rgba(255,255,255,.62);background:rgba(255,255,255,.08)}
+.badge--results{color:rgb(var(--state-results));background:rgba(0,150,57,.14)}
+.badge--provisional{color:rgb(var(--state-provisional));background:rgba(243,190,0,.13)}
+.badge--tba{color:rgb(var(--state-tba));background:rgba(107,109,112,.18)}
+
+/* empty state: the copy lives in the data, not in the markup */
+.empty{
+  border:1px dashed rgba(255,255,255,.18);border-radius:calc(var(--r) + 2px);
+  padding:clamp(28px,5vw,56px);text-align:center
+}
+.empty__t{font-size:clamp(1.125rem,1rem + .8vw,1.75rem);font-weight:700}
+.empty__b{margin-top:10px;color:rgba(255,255,255,.5);font-size:.9375rem;max-width:52ch;margin-inline:auto}
+
+/* circuit card */
+.tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(14px,1.6vw,22px)}
+.track{border:0;border-radius:calc(var(--r) + 2px);padding:clamp(18px,2vw,26px);background:var(--card)}
+.track__head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.track__name{font-size:1.125rem;font-weight:700;line-height:1.2}
+
+/* track map */
+/* A fixed-ratio box, wider than either track's own ratio (Sepang 1.20,
+   Mandalika 0.79), so HEIGHT always drives the scale and both maps render at
+   the same height. max-width is gone: that was what cropped Sepang. */
+.tmap{height:clamp(76px,8vw,116px);aspect-ratio:1.3;width:auto;flex:none;overflow:visible}
+/* one red line only, with no grey track body behind it */
+.tmap__line{
+  fill:none;stroke:rgb(var(--accent));stroke-width:2.2;
+  stroke-linejoin:round;stroke-linecap:round;
+  transition:stroke .25s var(--ease)
+}
+.track:hover .tmap__line{stroke:#fff}
+.track__meta{margin-top:4px;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.track__specs{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:14px}
+.spec__v{font-size:1.0625rem;font-weight:700;font-variant-numeric:tabular-nums}
+.spec__k{margin-top:4px;font-size:.5625rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.42)}
+.track__rec{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:.8125rem;color:rgba(255,255,255,.55)}
+.track__rec b{color:#fff;font-variant-numeric:tabular-nums}
+
+/* ---------- 5. data tables ---------- */
+.tablewrap{overflow-x:auto;scrollbar-width:thin}
+.dt{width:100%;border-collapse:collapse;font-size:.9375rem}
+.dt th,.dt td{padding:14px 16px;text-align:left;white-space:nowrap}
+/* The table header is NOT sticky. Its wrapper is a horizontal scroll
+   container, so position:sticky inside it resolves offsets against the
+   wrapper rather than the viewport, and the row ends up floating in the
+   middle of the table. */
+.dt th{
+  font-size:.625rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);border-bottom:1px solid var(--line);
+  background:transparent
+}
+.dt td{border-bottom:1px solid var(--row)}
+.dt tbody tr{transition:background-color .25s var(--ease)}
+.dt tbody tr:hover{background:var(--row-hover)}
+.dt .num{font-variant-numeric:tabular-nums}
+.dt .r{text-align:right}
+.dt__pos{width:64px;font-size:1.0625rem;font-weight:700;font-variant-numeric:tabular-nums}
+.dt__pos--out{color:rgba(255,255,255,.35);font-size:.8125rem;letter-spacing:.1em}
+.dt__name{font-weight:700}
+.dt__sub{display:block;margin-top:2px;font-size:.75rem;font-weight:400;color:rgba(255,255,255,.5);white-space:nowrap}
+.dt__time{font-variant-numeric:tabular-nums;font-weight:700}
+.dt__gap{font-variant-numeric:tabular-nums;color:rgba(255,255,255,.5)}
+.dt tbody tr.is-lead .dt__time{color:rgb(var(--accent))}
+.dt__nat{font-size:.75rem;letter-spacing:.12em;color:rgba(255,255,255,.55)}
+
+/* flag + country code */
+.nat{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.nat__c{font-size:.75rem;letter-spacing:.12em}
+.flag{
+  width:20px;height:15px;flex:none;border-radius:2px;object-fit:cover;
+  box-shadow:0 0 0 1px rgba(255,255,255,.16)
+}
+/* inside small-caps labels (round and circuit cards) the flag shrinks too */
+.round__no .flag,.track__meta .flag{width:16px;height:12px}
+.round__no .nat,.track__meta .nat{gap:6px;vertical-align:-2px}
+
+/* car number */
+.carno{
+  display:inline-grid;place-items:center;min-width:34px;height:24px;padding:0 6px;
+  border:1px solid var(--line);border-radius:3px;
+  font-size:.75rem;font-weight:700;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.8)
+}
+
+/* class chip */
+.cls{
+  display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:3px;
+  font-size:.625rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase
+}
+.cls::before{content:"";width:3px;height:11px;border-radius:1px;background:currentColor}
+.cls--pro{color:rgb(var(--cls-pro));background:rgba(198,202,208,.12)}
+.cls--proam{color:rgb(var(--cls-proam));background:rgba(58,107,155,.18)}
+.cls--gt4{color:rgb(var(--cls-gt4));background:rgba(0,150,57,.15)}
+.cls--out{color:rgb(var(--cls-out));background:rgba(107,109,112,.16)}
+
+/* ---------- 6. standings panels ---------- */
+.sortbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:20px}
+.chip{
+  height:34px;padding:0 14px;border:1px solid var(--line);border-radius:var(--r);
+  font-size:.8125rem;color:rgba(255,255,255,.7);
+  transition:background-color .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease)
+}
+.chip:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.chip[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:#fff;font-weight:700}
+
+/* a thin bar in the active metric column, purely to help read the order */
+.bar{display:flex;align-items:center;gap:10px}
+.bar__t{width:100px;height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;flex:none}
+.bar__f{display:block;height:100%;background:rgb(var(--accent));transform-origin:left;
+  transition:transform .4s var(--ease)}
+.bar__n{font-variant-numeric:tabular-nums;font-weight:700;min-width:1.5ch}
+
+/* ---------- 7. results + qualifying panels ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:20px;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.fgroup{display:flex;align-items:center;gap:8px}
+.fgroup__k{font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-right:2px}
+.rcount{margin-left:auto;font-size:.8125rem;color:rgba(255,255,255,.45);font-variant-numeric:tabular-nums}
+
+.session{margin-bottom:clamp(24px,3.5vw,44px)}
+.session__head{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:12px}
+.session__tag{
+  display:grid;place-items:center;height:30px;padding:0 12px;border-radius:var(--r);
+  background:rgb(var(--accent));color:#fff;
+  font-size:.8125rem;font-weight:700;letter-spacing:.1em
+}
+.session__title{font-size:1rem;font-weight:700}
+.session__meta{font-size:.8125rem;color:rgba(255,255,255,.45)}
+
+.best{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:clamp(16px,3vw,40px);
+  border:1px solid var(--line);border-radius:calc(var(--r) + 2px);
+  background:linear-gradient(100deg,rgba(218,2,2,.14),transparent 62%);
+  padding:clamp(18px,2.4vw,30px);margin-bottom:clamp(24px,3.5vw,40px)
+}
+/* chequered-flag accent on the right edge: a board from a single
+   conic-gradient, skewed slightly and faded out to the left with a mask */
+.best__checker{
+  position:absolute;z-index:-1;top:-10%;bottom:-10%;right:-14px;
+  width:clamp(120px,26%,280px);pointer-events:none;
+  background-image:conic-gradient(
+    rgba(255,255,255,.16) 25%, transparent 0 50%,
+    rgba(255,255,255,.16) 0 75%, transparent 0);
+  background-size:28px 28px;
+  transform:skewX(-8deg);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 78%);
+          mask-image:linear-gradient(to right,transparent,#000 78%)
+}
+.best__t{font-size:clamp(2rem,1rem + 3.4vw,3.75rem);font-weight:700;line-height:.95;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.best__k{font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px}
+.best__who{font-size:1.0625rem;font-weight:700}
+.best__meta{margin-top:4px;font-size:.8125rem;color:rgba(255,255,255,.55)}
+
+/* source note */
+.srcnote{
+  max-width:var(--wrap);margin:0 auto;padding:0 var(--pad) clamp(48px,7vw,96px);
+  font-size:.75rem;line-height:1.7;color:rgba(255,255,255,.4)
+}
+.srcnote a{color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.25)}
+.srcnote a:hover{color:rgb(var(--accent));border-color:rgb(var(--accent))}
+
+/* ---------- scroll-fade ----------
+   A gradient mask on the ends of a scrollable container that clears itself
+   once the scroll hits the stop, so an edge only stays hazy while there is
+   still content past it. No scroll listener: a scroll timeline drives the
+   animation. The technique is taken from racing.porsche.com. */
+@property --sf-s{syntax:"<length-percentage>";inherits:false;initial-value:0px}
+@property --sf-e{syntax:"<length-percentage>";inherits:false;initial-value:0px}
+@keyframes sf-reveal-s{0%{--sf-s:0px}to{--sf-s:var(--sf-size,min(12%,40px))}}
+@keyframes sf-reveal-e{0%{--sf-e:var(--sf-size,min(12%,40px))}to{--sf-e:0px}}
+.scroll-fade-x{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 var(--sf-s,0px),#000 calc(100% - var(--sf-e,0px)),transparent 100%);
+          mask-image:linear-gradient(to right,transparent 0,#000 var(--sf-s,0px),#000 calc(100% - var(--sf-e,0px)),transparent 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat
+}
+@supports (animation-timeline:scroll()){
+  .scroll-fade-x{
+    animation:sf-reveal-s 1ms var(--ease),sf-reveal-e 1ms var(--ease);
+    animation-timeline:scroll(self x),scroll(self x);
+    animation-range:0 var(--sf-reveal,72px),calc(100% - var(--sf-reveal,72px)) 100%;
+    animation-fill-mode:both
+  }
+}
+@supports not (animation-timeline:scroll()){
+  /* without scroll timelines the mask is static: both ends stay hazy */
+  .scroll-fade-x{--sf-s:min(12%,40px);--sf-e:min(12%,40px)}
+}
+
+/* ---------- 8. reduced motion ---------- */
+.no-motion .rpanel.is-swap{animation:none}
+.no-motion .round:hover{transform:none}
+.no-motion .bar__f{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .rpanel.is-swap{animation:none}
+  .round:hover{transform:none}
+  .bar__f{transition:none}
+}
+
+/* ---------- 9. responsive ---------- */
+@media (max-width:1100px){
+  .rstats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rstat:nth-child(3){border-right:0}
+  .rstat:nth-child(4){padding-left:0}
+  .rstat:nth-child(-n+3){border-bottom:1px solid var(--line)}
+  .focus{grid-template-columns:1fr}
+}
+@media (max-width:820px){
+  /* di layar sempit tanggal di kanan dilepas; hitung mundurnya yang penting */
+  .ticker__meta{display:none}
+  .ticker__in{min-height:42px;gap:12px}
+  .rhead__top{align-items:flex-start;flex-direction:column}
+  .seasons{width:100%;overflow-x:auto;scrollbar-width:none}
+  .seasons::-webkit-scrollbar{display:none}
+  .best{grid-template-columns:1fr;gap:14px}
+  .best__checker{width:clamp(84px,40%,150px);background-size:22px 22px;opacity:.8}
+  .rounds{grid-template-columns:1fr}
+  .round__place{font-size:clamp(1.5rem,7vw,2rem)}
+  .round__place .flag{width:28px;height:28px}
+  .round__podium{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .ticker__k,.ticker__sep{display:none}
+  .tmap{height:clamp(68px,17vw,96px)}
+  /* the four specs become 2x2, rather than a dangling 3+1 */
+  .track__specs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rstats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rstat:nth-child(2n){border-right:0}
+  .rstat:nth-child(2n+1){padding-left:0}
+  .rstat:nth-child(-n+4){border-bottom:1px solid var(--line)}
+  .dt th,.dt td{padding:12px}
+  .filters{gap:14px}
+  .rcount{margin-left:0;width:100%}
+}

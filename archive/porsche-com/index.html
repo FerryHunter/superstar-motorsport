@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Porsche — Sports cars, SUVs & Electric Performance</title>
+<meta name="description" content="Discover the Porsche model range, motorsport heritage and electric performance.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ SVG SPRITE (placeholder illustrations + icons) ============ -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="car-sports" viewBox="0 0 400 140">
+    <path d="M22 104c0-9 7-13 18-14l30-3c17-23 40-36 71-40l74-6c41-2 76 7 105 24l36 12c19 6 26 12 26 23v6c0 4-4 6-10 6H32c-7 0-10-4-10-8z" fill="currentColor" opacity=".92"/>
+    <path d="M104 84c14-16 32-25 55-28l58-5c28-1 52 5 73 17z" fill="#fff" opacity=".18"/>
+    <circle cx="112" cy="112" r="24" fill="#0b0b0b"/><circle cx="112" cy="112" r="10" fill="currentColor" opacity=".55"/>
+    <circle cx="300" cy="112" r="24" fill="#0b0b0b"/><circle cx="300" cy="112" r="10" fill="currentColor" opacity=".55"/>
+  </symbol>
+  <symbol id="car-suv" viewBox="0 0 400 140">
+    <path d="M24 100c0-10 6-15 17-17l24-4c12-27 30-42 56-45l96-4c30-1 53 12 70 39l38 10c20 5 28 11 28 22v7c0 4-4 6-10 6H34c-7 0-10-4-10-9z" fill="currentColor" opacity=".92"/>
+    <path d="M96 78c9-21 24-32 45-34l84-3c25-1 44 11 58 33z" fill="#fff" opacity=".18"/>
+    <circle cx="114" cy="110" r="27" fill="#0b0b0b"/><circle cx="114" cy="110" r="11" fill="currentColor" opacity=".55"/>
+    <circle cx="298" cy="110" r="27" fill="#0b0b0b"/><circle cx="298" cy="110" r="11" fill="currentColor" opacity=".55"/>
+  </symbol>
+  <symbol id="car-sedan" viewBox="0 0 400 140">
+    <path d="M18 102c0-9 7-13 18-15l26-3c16-24 38-37 67-40l86-4c38-1 70 9 96 30l40 12c20 6 28 12 28 23v5c0 4-4 6-10 6H28c-7 0-10-4-10-8z" fill="currentColor" opacity=".92"/>
+    <path d="M98 82c13-17 30-26 51-28l70-4c25-1 46 6 64 19z" fill="#fff" opacity=".18"/>
+    <circle cx="110" cy="110" r="24" fill="#0b0b0b"/><circle cx="110" cy="110" r="10" fill="currentColor" opacity=".55"/>
+    <circle cx="304" cy="110" r="24" fill="#0b0b0b"/><circle cx="304" cy="110" r="10" fill="currentColor" opacity=".55"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M13.2 5l-1.1 1.1 5 5H4v1.6h13.1l-5 5L13.2 19l6.9-7z" fill="currentColor"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M8.6 4.5 7.5 5.6 13.9 12l-6.4 6.4 1.1 1.1L16.1 12z" fill="currentColor"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l5 5 1.5-1.5zM10 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5" fill="currentColor"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9m0 2c-4.4 0-8 2.5-8 5.5V21h16v-1.5c0-3-3.6-5.5-8-5.5" fill="currentColor"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m19 6.4-1.4-1.4L12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z" fill="currentColor"/></symbol>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="hdr" id="hdr" data-nav-open="false">
+  <div class="hdr__inner">
+    <a class="hdr__brand" href="#" aria-label="Porsche — home">
+      <span class="crest" aria-hidden="true">
+        <svg viewBox="0 0 40 52"><path d="M20 1 3 6v20c0 14 9 21 17 25 8-4 17-11 17-25V6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 1v50M3 20h34" stroke="currentColor" stroke-width="1.2"/></svg>
+      </span>
+      <span class="hdr__wordmark">PORSCHE</span>
+    </a>
+
+    <nav class="hdr__nav" aria-label="Main">
+      <ul class="navlist">
+        <li class="navlist__item"><button class="navlink" type="button" data-mega="models" aria-expanded="false" aria-controls="mega-models">Models</button></li>
+        <li class="navlist__item"><button class="navlink" type="button" data-mega="shopping" aria-expanded="false" aria-controls="mega-shopping">Shopping</button></li>
+        <li class="navlist__item"><a class="navlink" href="#motorsport">Motorsport</a></li>
+        <li class="navlist__item"><a class="navlink" href="#stories">Experience</a></li>
+        <li class="navlist__item"><a class="navlink" href="#finder">Approved</a></li>
+      </ul>
+    </nav>
+
+    <div class="hdr__tools">
+      <button class="iconbtn" type="button" aria-label="Search"><svg class="ico"><use href="#i-search"/></svg></button>
+      <button class="iconbtn" type="button" aria-label="Find a dealer"><svg class="ico"><use href="#i-pin"/></svg></button>
+      <button class="iconbtn" type="button" aria-label="My Porsche"><svg class="ico"><use href="#i-user"/></svg></button>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mega menus (desktop) -->
+  <div class="mega" id="mega-models" data-mega-panel="models" hidden>
+    <div class="mega__inner">
+      <div class="mega__col">
+        <p class="mega__label">Sports cars</p>
+        <ul class="mega__links">
+          <li><a href="#">718 Boxster</a></li><li><a href="#">718 Cayman</a></li>
+          <li><a href="#">911</a></li><li><a href="#">Taycan</a></li>
+        </ul>
+      </div>
+      <div class="mega__col">
+        <p class="mega__label">SUV &amp; Sedan</p>
+        <ul class="mega__links">
+          <li><a href="#">Macan</a></li><li><a href="#">Cayenne</a></li>
+          <li><a href="#">Panamera</a></li>
+        </ul>
+      </div>
+      <div class="mega__col">
+        <p class="mega__label">Discover</p>
+        <ul class="mega__links">
+          <li><a href="#">All models</a></li><li><a href="#">Compare models</a></li>
+          <li><a href="#">Configurator</a></li><li><a href="#">E-Performance</a></li>
+        </ul>
+      </div>
+      <div class="mega__feature">
+        <div class="mega__figure"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sports"/></svg></div>
+        <p class="mega__label">New</p>
+        <p class="mega__ftitle">The new 911 Carrera</p>
+        <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega" id="mega-shopping" data-mega-panel="shopping" hidden>
+    <div class="mega__inner">
+      <div class="mega__col">
+        <p class="mega__label">Buy</p>
+        <ul class="mega__links">
+          <li><a href="#">Car configurator</a></li><li><a href="#">New cars in stock</a></li>
+          <li><a href="#">Porsche Approved</a></li>
+        </ul>
+      </div>
+      <div class="mega__col">
+        <p class="mega__label">Services</p>
+        <ul class="mega__links">
+          <li><a href="#">Financial Services</a></li><li><a href="#">Trade-in</a></li>
+          <li><a href="#">Test drive</a></li>
+        </ul>
+      </div>
+      <div class="mega__col">
+        <p class="mega__label">Shop</p>
+        <ul class="mega__links">
+          <li><a href="#">Lifestyle</a></li><li><a href="#">Tequipment</a></li>
+          <li><a href="#">Classic parts</a></li>
+        </ul>
+      </div>
+      <div class="mega__feature">
+        <div class="mega__figure"><svg class="carart" viewBox="0 0 400 140"><use href="#car-suv"/></svg></div>
+        <p class="mega__label">In stock</p>
+        <p class="mega__ftitle">Available near you</p>
+        <a class="arrowlink" href="#finder">Search stock <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Mobile menu">
+  <div class="drawer__head">
+    <span class="hdr__wordmark">PORSCHE</span>
+    <button class="iconbtn" type="button" id="drawerClose" aria-label="Close menu"><svg class="ico"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="drawer__nav">
+    <ul>
+      <li><button class="acc__btn" type="button" aria-expanded="false">Models <svg class="ico"><use href="#i-chevron"/></svg></button>
+        <div class="acc__panel"><a href="#">911</a><a href="#">Taycan</a><a href="#">Panamera</a><a href="#">Macan</a><a href="#">Cayenne</a><a href="#">718</a></div>
+      </li>
+      <li><button class="acc__btn" type="button" aria-expanded="false">Shopping <svg class="ico"><use href="#i-chevron"/></svg></button>
+        <div class="acc__panel"><a href="#">Configurator</a><a href="#">Cars in stock</a><a href="#">Porsche Approved</a><a href="#">Financial Services</a></div>
+      </li>
+      <li><a class="drawer__link" href="#motorsport">Motorsport</a></li>
+      <li><a class="drawer__link" href="#stories">Experience</a></li>
+      <li><a class="drawer__link" href="#finder">Approved</a></li>
+    </ul>
+  </nav>
+  <div class="drawer__foot">
+    <a class="btn btn--solid" href="#">Build your Porsche</a>
+    <a class="arrowlink" href="#">Find a dealer <svg class="ico"><use href="#i-arrow"/></svg></a>
+  </div>
+</aside>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero__bg" data-parallax="0.18">
+      <svg class="hero__car" viewBox="0 0 400 140" aria-hidden="true"><use href="#car-sports"/></svg>
+    </div>
+    <div class="hero__grad"></div>
+    <div class="hero__content wrap">
+      <p class="eyebrow" data-reveal>New</p>
+      <h1 class="hero__title" data-reveal data-reveal-delay="80">The new 911 Carrera</h1>
+      <p class="hero__sub" data-reveal data-reveal-delay="160">Timeless design, sharpened. Seven decades of rear-engine engineering, tuned for the road ahead.</p>
+      <div class="hero__cta" data-reveal data-reveal-delay="240">
+        <a class="btn btn--solid" href="#models">Discover the 911</a>
+        <a class="btn btn--ghost" href="#">Configure</a>
+      </div>
+      <p class="hero__legal" data-reveal data-reveal-delay="320">Fuel consumption combined: 10.7&nbsp;l/100&nbsp;km · CO₂ emissions combined: 244&nbsp;g/km</p>
+    </div>
+    <a class="hero__scroll" href="#models" aria-label="Scroll to models"><span></span></a>
+  </section>
+
+  <!-- ============ MODEL RANGE ============ -->
+  <section class="section" id="models">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <h2 class="section__title">Model range</h2>
+        <a class="arrowlink" href="#">All models <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="Filter models" data-reveal>
+        <button class="tab is-active" role="tab" aria-selected="true"  data-filter="all">All</button>
+        <button class="tab"           role="tab" aria-selected="false" data-filter="sports">Sports cars</button>
+        <button class="tab"           role="tab" aria-selected="false" data-filter="suv">SUV &amp; Sedan</button>
+        <button class="tab"           role="tab" aria-selected="false" data-filter="electric">E-Performance</button>
+      </div>
+    </div>
+
+    <div class="carousel" data-reveal>
+      <div class="carousel__track" id="track" tabindex="0" aria-label="Model carousel">
+        <article class="card" data-cat="sports">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sports"/></svg></div>
+          <h3 class="card__title">911</h3>
+          <p class="card__meta">from €107,800</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card" data-cat="sports">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sports"/></svg></div>
+          <h3 class="card__title">718 Cayman</h3>
+          <p class="card__meta">from €63,000</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card" data-cat="electric sports">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sedan"/></svg></div>
+          <h3 class="card__title">Taycan</h3>
+          <p class="card__meta">from €101,500</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card" data-cat="suv">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sedan"/></svg></div>
+          <h3 class="card__title">Panamera</h3>
+          <p class="card__meta">from €107,800</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card" data-cat="suv electric">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-suv"/></svg></div>
+          <h3 class="card__title">Macan Electric</h3>
+          <p class="card__meta">from €84,100</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="card" data-cat="suv">
+          <div class="card__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-suv"/></svg></div>
+          <h3 class="card__title">Cayenne</h3>
+          <p class="card__meta">from €93,400</p>
+          <a class="arrowlink" href="#">Discover <svg class="ico"><use href="#i-arrow"/></svg></a>
+        </article>
+      </div>
+
+      <div class="carousel__nav wrap">
+        <button class="cbtn" id="prev" type="button" aria-label="Previous"><svg class="ico ico--flip"><use href="#i-chevron"/></svg></button>
+        <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+        <button class="cbtn" id="next" type="button" aria-label="Next"><svg class="ico"><use href="#i-chevron"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HIGHLIGHT / SPLIT ============ -->
+  <section class="split">
+    <div class="split__media" data-reveal>
+      <svg class="carart carart--lg" viewBox="0 0 400 140"><use href="#car-sports"/></svg>
+    </div>
+    <div class="split__body">
+      <p class="eyebrow" data-reveal>Icon</p>
+      <h2 class="split__title" data-reveal data-reveal-delay="80">Seven generations,<br>one silhouette</h2>
+      <p class="split__text" data-reveal data-reveal-delay="160">Every generation keeps the profile and moves the engineering forward. Wider track, lighter body, sharper aerodynamics — the same idea, resolved again.</p>
+      <dl class="stats" data-reveal data-reveal-delay="240">
+        <div class="stat"><dt>0–100 km/h</dt><dd><span class="num" data-count="3.4" data-decimals="1">0</span> s</dd></div>
+        <div class="stat"><dt>Top speed</dt><dd><span class="num" data-count="308">0</span> km/h</dd></div>
+        <div class="stat"><dt>Power</dt><dd><span class="num" data-count="480">0</span> PS</dd></div>
+      </dl>
+      <a class="arrowlink" href="#" data-reveal data-reveal-delay="320">Explore the 911 <svg class="ico"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ============ STORIES ============ -->
+  <section class="section" id="stories">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <h2 class="section__title">Newsroom</h2>
+        <a class="arrowlink" href="#">All stories <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </header>
+      <div class="grid3">
+        <a class="story" href="#" data-reveal>
+          <div class="story__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sedan"/></svg></div>
+          <p class="story__cat">Innovation</p>
+          <h3 class="story__title">800-volt architecture, explained</h3>
+          <span class="arrowlink">Read <svg class="ico"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="story" href="#" data-reveal data-reveal-delay="90">
+          <div class="story__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-sports"/></svg></div>
+          <p class="story__cat">Heritage</p>
+          <h3 class="story__title">Why the engine stayed in the back</h3>
+          <span class="arrowlink">Read <svg class="ico"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="story" href="#" data-reveal data-reveal-delay="180">
+          <div class="story__media"><svg class="carart" viewBox="0 0 400 140"><use href="#car-suv"/></svg></div>
+          <p class="story__cat">Experience</p>
+          <h3 class="story__title">A day at the Experience Centre</h3>
+          <span class="arrowlink">Read <svg class="ico"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINDER ============ -->
+  <section class="finder" id="finder">
+    <div class="wrap finder__inner">
+      <div class="finder__copy">
+        <p class="eyebrow eyebrow--light" data-reveal>Porsche Approved</p>
+        <h2 class="finder__title" data-reveal data-reveal-delay="80">Find your Porsche</h2>
+        <p class="finder__text" data-reveal data-reveal-delay="160">Certified pre-owned vehicles, inspected to factory standard and covered by an extended warranty.</p>
+      </div>
+      <form class="finder__form" data-reveal data-reveal-delay="240" novalidate>
+        <div class="field">
+          <label for="f-model">Model</label>
+          <select id="f-model">
+            <option>Any model</option><option>911</option><option>718</option>
+            <option>Taycan</option><option>Panamera</option><option>Macan</option><option>Cayenne</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-loc">Location</label>
+          <input id="f-loc" type="text" placeholder="City or postcode" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="f-price">Max price</label>
+          <select id="f-price">
+            <option>No limit</option><option>€75,000</option><option>€100,000</option><option>€150,000</option>
+          </select>
+        </div>
+        <button class="btn btn--light" type="submit">Show vehicles</button>
+        <p class="finder__hint" id="finderHint" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ MOTORSPORT ============ -->
+  <section class="motor" id="motorsport">
+    <div class="motor__bg" data-parallax="0.12"></div>
+    <div class="wrap motor__content">
+      <p class="eyebrow eyebrow--light" data-reveal>Motorsport</p>
+      <h2 class="motor__title" data-reveal data-reveal-delay="80">Built on the track.<br>Driven on the road.</h2>
+      <p class="motor__text" data-reveal data-reveal-delay="160">More than 24,000 race victories feed straight back into the cars we build for the street.</p>
+      <a class="btn btn--light" href="#" data-reveal data-reveal-delay="240">Explore Motorsport</a>
+    </div>
+  </section>
+
+  <!-- ============ NEWSLETTER ============ -->
+  <section class="section section--tight">
+    <div class="wrap news">
+      <div data-reveal>
+        <h2 class="news__title">Stay in the loop</h2>
+        <p class="news__text">News, model launches and event invitations — a few times a year, nothing more.</p>
+      </div>
+      <form class="news__form" data-reveal data-reveal-delay="120" novalidate>
+        <div class="field field--inline">
+          <label class="sr-only" for="n-mail">Email address</label>
+          <input id="n-mail" type="email" placeholder="Email address" required>
+          <button class="btn btn--solid" type="submit">Subscribe</button>
+        </div>
+        <p class="news__hint" id="newsHint" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="ftr">
+  <div class="wrap ftr__grid">
+    <div class="ftr__col">
+      <p class="ftr__label">Models</p>
+      <ul><li><a href="#">911</a></li><li><a href="#">718</a></li><li><a href="#">Taycan</a></li><li><a href="#">Panamera</a></li><li><a href="#">Macan</a></li><li><a href="#">Cayenne</a></li></ul>
+    </div>
+    <div class="ftr__col">
+      <p class="ftr__label">Shopping</p>
+      <ul><li><a href="#">Configurator</a></li><li><a href="#">Cars in stock</a></li><li><a href="#">Porsche Approved</a></li><li><a href="#">Financial Services</a></li></ul>
+    </div>
+    <div class="ftr__col">
+      <p class="ftr__label">Company</p>
+      <ul><li><a href="#">About Porsche</a></li><li><a href="#">Newsroom</a></li><li><a href="#">Careers</a></li><li><a href="#">Investor Relations</a></li></ul>
+    </div>
+    <div class="ftr__col">
+      <p class="ftr__label">Contact</p>
+      <ul><li><a href="#">Find a dealer</a></li><li><a href="#">Customer service</a></li><li><a href="#">Test drive</a></li></ul>
+    </div>
+  </div>
+  <div class="wrap ftr__bar">
+    <p class="ftr__legal">Practice reconstruction for HTML/CSS study. Not affiliated with Dr. Ing. h.c. F. Porsche AG.</p>
+    <ul class="ftr__meta"><li><a href="#">Legal notice</a></li><li><a href="#">Privacy</a></li><li><a href="#">Cookies</a></li></ul>
+  </div>
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="Back to top"><svg class="ico ico--up"><use href="#i-chevron"/></svg></button>
+
+<!-- Cookie banner -->
+<div class="cookie" id="cookie" hidden>
+  <p>We use cookies to improve this site. You can decline non-essential cookies.</p>
+  <div class="cookie__actions">
+    <button class="btn btn--ghost btn--sm" type="button" data-cookie="decline">Decline optional</button>
+    <button class="btn btn--solid btn--sm" type="button" data-cookie="accept">Accept</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
